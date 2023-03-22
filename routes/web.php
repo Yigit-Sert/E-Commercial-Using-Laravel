@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +19,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function(){
+Route::get('/products/{product:slug}', function (Product $product) {
+    return view('product', [
+        'products' => $product
+    ]);
+});
+
+Route::get('categories/{category:slug}', function (Category $category) {
+    return view('posts', [  //  pass them into the view
+        'products' => $category->product
+    ]);
+});
+
+Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/register', function(){
+Route::get('/register', function () {
     return view('register');
 });
